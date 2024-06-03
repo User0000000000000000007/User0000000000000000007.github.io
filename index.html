@@ -17,7 +17,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-border: 1px solid white;
+border: 1px solid transparent;
   border-radius: 99999%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -66,6 +66,9 @@ border: 1px solid white;
                 transform: translate(-50%, -100vh);
             }
         }
+
+        ::-moz-selection { /* Code for Firefox */  color: red;  background: transparent;}
+        ::selection {  color: red;  background: transparent;}
     </style>
 </head>
 <body>
