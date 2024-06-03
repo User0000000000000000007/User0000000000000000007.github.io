@@ -1,35 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" style="background-color: black;color: white;">
+<html lang="en" style="color: white;background-color: black;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Agent, Battery Percentage, and Window Size</title>
+<title>Telegram Bot App</title>
 <script>
 window.onload = function() {
-    // Get User Agent
-    var userAgent = navigator.userAgent;
-
-    // Get Battery Percentage
-    navigator.getBattery().then(function(battery) {
-        var batteryPercentage = battery.level * 100;
-        document.getElementById("battery").innerHTML = "Battery Percentage: " + batteryPercentage + "%";
-    });
-
-    // Set Window Size for Telegram App
-    if (userAgent.includes('Telegram')) {
-        window.resizeTo(800, 600); // Set window size for Telegram
-    }
-
-    // Get Window Size
-    var windowSize = "Window Size: " + window.innerWidth + "x" + window.innerHeight;
-    document.getElementById("window-size").innerHTML = windowSize;
+    // Resize window to maximum available size
+    window.resizeTo(screen.width, screen.height);
 };
 </script>
 </head>
 <body>
-<h1>User Agent, Battery Percentage, and Window Size</h1>
-<p id="user-agent">User Agent: <script>document.write(navigator.userAgent);</script></p>
-<p id="battery">Battery Percentage: </p>
-<p id="window-size">Window Size: </p>
+<h1>Welcome to Your Telegram Bot App</h1>
+<!-- Your bot app content goes here -->
 </body>
 </html>
