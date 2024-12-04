@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Calendar with Persistent Tasks</title>
+    <style>
+     body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin: 20px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 20px auto;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #303030;
+}
+
+th {
+    background-color: #333333;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+td {
+    font-size: 14px;
+}
+
+td:nth-child(odd) {
+    background-color: #1a1a1a;
+}
+
+td:nth-child(even) {
+    background-color: #2a2a2a;
+}
+
+input[type="text"] {
+    width: 95%;
+    background-color: #262626;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    padding: 8px;
+    color: #e0e0e0;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #00adb5;
+    box-shadow: 0 0 5px #00adb5;
+}
+
+/* Hover effect for rows */
+tr:hover td {
+    background-color: #383838;
+    transition: background-color 0.3s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    input[type="text"] {
+        font-size: 12px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">December Calendar</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Physics</th>
+                <th>Chemistry</th>
+                <th>Biology</th>
+                <th>Higher Math</th>
+                <th>Others</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScript will populate the rows here -->
+        </tbody>
+    </table>
+
+    <script>
+        const startDay = 1;
+        const endDay = 31;
+        const month = "December";
+
+        const tbody = document.querySelector("table tbody");
+
+        // Load saved data from localStorage
+        const loadTasks = () => {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || {};
+            return tasks;
+        };
+
+        const saveTasks = (tasks) => {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        };
+
+        // Generate rows and handle input changes
+        const tasks = loadTasks();
+
+        for (let day = startDay; day <= endDay; day++) {
+            const row = document.createElement("tr");
+            const dateKey = `${month} ${day}`;
+
+            // Date column
+            const dateCell = document.createElement("td");
+            dateCell.textContent = dateKey;
+            row.appendChild(dateCell);
+
+            // Task columns
+            for (let i = 1; i <= 5; i++) {
+                const taskCell = document.createElement("td");
+                const input = document.createElement("input");
+                input.type = "text";
+                input.placeholder = `.`;
+                input.value = tasks[dateKey]?.[`task${i}`] || ""; // Load saved value if available
+
+                // Save task on input change
+                input.addEventListener("input", () => {
+                    if (!tasks[dateKey]) tasks[dateKey] = {};
+                    tasks[dateKey][`task${i}`] = input.value;
+                    saveTasks(tasks);
+                });
+
+                taskCell.appendChild(input);
+                row.appendChild(taskCell);
+            }
+
+            tbody.appendChild(row);
+        }
+    </script>
+</body>
+</html>
